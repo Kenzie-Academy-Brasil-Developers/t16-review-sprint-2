@@ -8,6 +8,8 @@ import { api } from "./services/api";
 import { useEffect } from "react";
 import { GlobalStyles } from "./styles/GlobalStyles";
 import { StyledContainer } from "./styles/grid";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.min.css';
 
 const App = () => {
    const localStorageFavoriteList = localStorage.getItem("@FAVORITELIST");
@@ -67,8 +69,9 @@ const App = () => {
       const newFavoriteList = [...favoritesList, currentNew];
       if (!favoritesList.some((favoriteNew) => favoriteNew.id === currentNew.id)) {
          setFavoritesList(newFavoriteList);
+         toast.success("Notícia favoritada com sucesso!")
       } else {
-         console.log("Notícia já favoritada.");
+         toast.error("Notícia já favoritada.");
       }
    };
 
@@ -77,6 +80,7 @@ const App = () => {
          (favoriteNew) => favoriteNew.id !== currentNewId
       );
       setFavoritesList(newFavoriteList);
+      toast.success("Favorito removido com sucesso!");
    };
 
    return (
@@ -87,7 +91,7 @@ const App = () => {
             favoritesList={favoritesList}
             setSearch={setSearch}
          />
-         <CategoryList categoriesList={categoriesList} setFilter={setFilter} />
+         <CategoryList categoriesList={categoriesList} filter={filter} setFilter={setFilter} />
          <StyledContainer>            
             <NewsFeed
                newsList={newsList}
@@ -103,6 +107,7 @@ const App = () => {
             <FavoriteModal
                favoritesList={favoritesList}
                removeNewFromFavoriteList={removeNewFromFavoriteList}
+               setIsFavoriteModalVisible={setIsFavoriteModalVisible}
             />
          ) : null}
          {currentSelectedNew ? (
@@ -111,6 +116,7 @@ const App = () => {
                setCurrentSelectedNew={setCurrentSelectedNew}
             />
          ) : null}
+         <ToastContainer position="bottom-left" />
       </div>
    );
 };

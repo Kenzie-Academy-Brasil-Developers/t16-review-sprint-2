@@ -2,9 +2,13 @@ import { useState } from "react";
 import { MdMenu, MdClose } from "react-icons/md";
 import { StyledMobileCategoryList } from "./style";
 import { StyledContainer } from "../../../styles/grid";
+import { useOutClick } from "../../../hooks/useOutClick";
 
 export const MobileCategoryList = ({ categoriesList, setFilter }) => {
    const [isOpen, setIsOpen] = useState(false);
+   const menuRef = useOutClick(() => {
+      setIsOpen(false);
+   });
 
    return (
       <StyledMobileCategoryList>
@@ -16,7 +20,7 @@ export const MobileCategoryList = ({ categoriesList, setFilter }) => {
             </StyledContainer>
          </div>
          {isOpen ? (
-            <ul>
+            <ul ref={menuRef}>
                <li>
                   <button onClick={() => setFilter("")}>Recentes</button>
                </li>

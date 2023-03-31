@@ -20,5 +20,6 @@ export const StyledMobileCategoryList = styled.div`
         padding: 10px;
         width: 100%;
         background: var(--color-white);
+        z-index: 1001;
     }
 `
