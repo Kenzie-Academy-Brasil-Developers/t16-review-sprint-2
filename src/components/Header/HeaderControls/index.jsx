@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { StyledHeaderControls } from "./style";
+import { MdSearch, MdFavoriteBorder } from "react-icons/md"
 
 export const HeaderControls = ({setIsFavoriteModalVisible, favoritesList, setSearch}) => {
     const [searchInput, setSearchInput] = useState("");
@@ -10,16 +12,16 @@ export const HeaderControls = ({setIsFavoriteModalVisible, favoritesList, setSea
     }
     
     return(
-        <div>
+        <StyledHeaderControls>
             <div>
                 <form onSubmit={submit}>
-                    <input type="search" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} />
-                    <button type="submit">Buscar</button>
+                    <input type="search" value={searchInput} placeholder="Buscar" onChange={(e) => setSearchInput(e.target.value)} />
+                    <button type="submit"><MdSearch size={26} /></button>
                 </form>
             </div>
             <div>
-                <button onClick={() => setIsFavoriteModalVisible(true)}>Favoritos ({favoritesList.length})</button>
+                <button className="favoriteButton" onClick={() => setIsFavoriteModalVisible(true)}><MdFavoriteBorder size={28} /> ({favoritesList.length})</button>
             </div>
-        </div>
+        </StyledHeaderControls>
     )
 }

@@ -1,3 +1,4 @@
+import { StyledTitleTwo } from "../../styles/typography"
 import { NewsCard } from "./NewsCard"
 
 export const NewsFeed = ({newsList, addNewToFavoriteList, setCurrentSelectedNew, searchAndFilteredResults, search, setSearch, filter}) => {
@@ -5,7 +6,7 @@ export const NewsFeed = ({newsList, addNewToFavoriteList, setCurrentSelectedNew,
     
     return(
         <div>
-            <h2>{search !== "" ? `Resultados para: ${search}` : "Recentes"}</h2>
+            <StyledTitleTwo fontSize="one">{search !== "" ? `Resultados para: ${search}` : "Recentes"}</StyledTitleTwo>
             {search !== "" ? <button onClick={() => setSearch("")}>Limpar busca</button> : null}
             <ul>
                 {currentNewsList.map(currentNew => (

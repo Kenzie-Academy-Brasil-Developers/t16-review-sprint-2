@@ -5,8 +5,7 @@ export const FavoriteList = ({favoritesList, removeNewFromFavoriteList}) => {
         <ul>
             {favoritesList.map(favoriteNew => (
                 <FavoriteCard key={favoriteNew.id} favoriteNew={favoriteNew} removeNewFromFavoriteList={removeNewFromFavoriteList} />
-            ))}
-            
+            ))}            
         </ul>
     )
 }

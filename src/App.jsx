@@ -6,17 +6,21 @@ import { FavoriteModal } from "./components/FavoriteModal";
 import { NewModal } from "./components/NewModal";
 import { api } from "./services/api";
 import { useEffect } from "react";
+import { GlobalStyles } from "./styles/GlobalStyles";
+import { StyledContainer } from "./styles/grid";
 
 const App = () => {
    const localStorageFavoriteList = localStorage.getItem("@FAVORITELIST");
    const [newsList, setNewsList] = useState([]);
-   const [favoritesList, setFavoritesList] = useState(localStorageFavoriteList ? JSON.parse(localStorageFavoriteList): []);
+   const [favoritesList, setFavoritesList] = useState(
+      localStorageFavoriteList ? JSON.parse(localStorageFavoriteList) : []
+   );
    const [categoriesList, setCategoriesList] = useState([]);
    const [isFavoriteModalVisible, setIsFavoriteModalVisible] = useState(false);
    const [currentSelectedNew, setCurrentSelectedNew] = useState(null);
    const [search, setSearch] = useState(""); //termo de busca
    const [filter, setFilter] = useState("");
-   
+
    /*
    const searchAndFilteredResults = newsList.filter((currentNew) =>
       currentNew.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -26,8 +30,10 @@ const App = () => {
 
    const searchAndFilteredResults = newsList.filter((currentNew) =>
       (currentNew.title.toLowerCase().includes(search.toLowerCase()) ||
-      currentNew.category.toLowerCase().includes(search.toLowerCase())) &&
-      filter === "" ? true : currentNew.category === filter
+         currentNew.category.toLowerCase().includes(search.toLowerCase())) &&
+      filter === ""
+         ? true
+         : currentNew.category === filter
    );
 
    const loadNews = async () => {
@@ -54,8 +60,8 @@ const App = () => {
    }, []); //montagem
 
    useEffect(() => {
-    localStorage.setItem("@FAVORITELIST", JSON.stringify(favoritesList))
-   }, [favoritesList]) //atualização
+      localStorage.setItem("@FAVORITELIST", JSON.stringify(favoritesList));
+   }, [favoritesList]); //atualização
 
    const addNewToFavoriteList = (currentNew) => {
       const newFavoriteList = [...favoritesList, currentNew];
@@ -75,22 +81,24 @@ const App = () => {
 
    return (
       <div className="App">
-        {filter}
+         <GlobalStyles />
          <Header
             setIsFavoriteModalVisible={setIsFavoriteModalVisible}
             favoritesList={favoritesList}
             setSearch={setSearch}
          />
          <CategoryList categoriesList={categoriesList} setFilter={setFilter} />
-         <NewsFeed
-            newsList={newsList}
-            searchAndFilteredResults={searchAndFilteredResults}
-            search={search}
-            setSearch={setSearch}
-            filter={filter}
-            addNewToFavoriteList={addNewToFavoriteList}
-            setCurrentSelectedNew={setCurrentSelectedNew}
-         />
+         <StyledContainer>            
+            <NewsFeed
+               newsList={newsList}
+               searchAndFilteredResults={searchAndFilteredResults}
+               search={search}
+               setSearch={setSearch}
+               filter={filter}
+               addNewToFavoriteList={addNewToFavoriteList}
+               setCurrentSelectedNew={setCurrentSelectedNew}
+            />
+         </StyledContainer>
          {isFavoriteModalVisible ? (
             <FavoriteModal
                favoritesList={favoritesList}
@@ -105,6 +113,6 @@ const App = () => {
          ) : null}
       </div>
    );
-}
+};
 
 export default App;

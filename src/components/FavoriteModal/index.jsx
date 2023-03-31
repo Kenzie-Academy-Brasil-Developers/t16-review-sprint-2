@@ -1,10 +1,11 @@
+import { StyledTitleTwo } from "../../styles/typography"
 import { FavoriteList } from "./FavoriteList"
 
 export const FavoriteModal = ({favoritesList, removeNewFromFavoriteList}) => {
     return(
         <div role="dialog">
             <button>Fechar</button>
-            <h2>Favoritos</h2>
+            <StyledTitleTwo fontSize="two">Favoritos</StyledTitleTwo>
             <FavoriteList favoritesList={favoritesList} removeNewFromFavoriteList={removeNewFromFavoriteList} />
         </div>
     )
