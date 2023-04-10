@@ -1,7 +1,10 @@
 import { StyledDesktopCategoryList, StyledDesktopCategoryListItem } from "./style";
 import { StyledContainer } from "../../../styles/grid";
+import { useNewsContext } from "../../../providers/NewsContext";
 
-export const DesktopCategoryList = ({ categoriesList, filter, setFilter }) => {
+export const DesktopCategoryList = ({ categoriesList }) => {
+   const { filter, setFilter } = useNewsContext();
+   
    return (
       <StyledContainer>
          <StyledDesktopCategoryList>

@@ -1,8 +1,11 @@
+import { useNewsContext } from "../../providers/NewsContext"
 import { StyledTitleTwo } from "../../styles/typography"
 import { NewsCard } from "./NewsCard"
 import { StyledNewsFeed } from "./style"
 
-export const NewsFeed = ({newsList, addNewToFavoriteList, setCurrentSelectedNew, searchAndFilteredResults, search, setSearch, filter}) => {
+export const NewsFeed = ({addNewToFavoriteList, setCurrentSelectedNew }) => {
+    const { newsList, searchAndFilteredResults, search, setSearch, filter} = useNewsContext();
+    
     const currentNewsList = search !== "" || filter !== "" ? searchAndFilteredResults : newsList
     
     return(

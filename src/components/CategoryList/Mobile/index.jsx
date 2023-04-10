@@ -3,9 +3,13 @@ import { MdMenu, MdClose } from "react-icons/md";
 import { StyledMobileCategoryList } from "./style";
 import { StyledContainer } from "../../../styles/grid";
 import { useOutClick } from "../../../hooks/useOutClick";
+import { useNewsContext } from "../../../providers/NewsContext";
 
-export const MobileCategoryList = ({ categoriesList, setFilter }) => {
+export const MobileCategoryList = ({ categoriesList }) => {
    const [isOpen, setIsOpen] = useState(false);
+
+   const { setFilter } = useNewsContext();
+
    const menuRef = useOutClick(() => {
       setIsOpen(false);
    });

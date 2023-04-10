@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { StyledHeaderControls } from "./style";
 import { MdSearch, MdFavoriteBorder } from "react-icons/md"
+import { useNewsContext } from "../../../providers/NewsContext";
 
-export const HeaderControls = ({setIsFavoriteModalVisible, favoritesList, setSearch}) => {
+export const HeaderControls = ({setIsFavoriteModalVisible, favoritesList}) => {
     const [searchInput, setSearchInput] = useState("");
+
+    const { setSearch } = useNewsContext();
 
     const submit = (event) => {
         event.preventDefault();
@@ -11,6 +14,8 @@ export const HeaderControls = ({setIsFavoriteModalVisible, favoritesList, setSea
         setSearchInput("");
     }
     
+    console.log("Header Controls renderizou.")
+
     return(
         <StyledHeaderControls>
             <div>

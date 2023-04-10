@@ -4,48 +4,24 @@ import { Header } from "./components/Header";
 import { NewsFeed } from "./components/NewsFeed";
 import { FavoriteModal } from "./components/FavoriteModal";
 import { NewModal } from "./components/NewModal";
+import { HeaderControls } from "./components/Header/HeaderControls";
+import { MobileCategoryList } from "./components/CategoryList/Mobile";
 import { api } from "./services/api";
 import { useEffect } from "react";
 import { GlobalStyles } from "./styles/GlobalStyles";
 import { StyledContainer } from "./styles/grid";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.min.css';
+import "react-toastify/dist/ReactToastify.min.css";
+import { DesktopCategoryList } from "./components/CategoryList/Desktop";
 
 const App = () => {
    const localStorageFavoriteList = localStorage.getItem("@FAVORITELIST");
-   const [newsList, setNewsList] = useState([]);
    const [favoritesList, setFavoritesList] = useState(
       localStorageFavoriteList ? JSON.parse(localStorageFavoriteList) : []
    );
    const [categoriesList, setCategoriesList] = useState([]);
    const [isFavoriteModalVisible, setIsFavoriteModalVisible] = useState(false);
-   const [currentSelectedNew, setCurrentSelectedNew] = useState(null);
-   const [search, setSearch] = useState(""); //termo de busca
-   const [filter, setFilter] = useState("");
-
-   /*
-   const searchAndFilteredResults = newsList.filter((currentNew) =>
-      currentNew.title.toLowerCase().includes(search.toLowerCase()) ||
-      currentNew.category.toLowerCase().includes(search.toLowerCase())
-   );
-   */
-
-   const searchAndFilteredResults = newsList.filter((currentNew) =>
-      (currentNew.title.toLowerCase().includes(search.toLowerCase()) ||
-         currentNew.category.toLowerCase().includes(search.toLowerCase())) &&
-      filter === ""
-         ? true
-         : currentNew.category === filter
-   );
-
-   const loadNews = async () => {
-      try {
-         const response = await api.get("/news");
-         setNewsList(response.data);
-      } catch (error) {
-         console.log(error);
-      }
-   };
+   const [currentSelectedNew, setCurrentSelectedNew] = useState(null);   
 
    const loadCategories = async () => {
       try {
@@ -57,7 +33,6 @@ const App = () => {
    };
 
    useEffect(() => {
-      loadNews();
       loadCategories();
    }, []); //montagem
 
@@ -69,7 +44,7 @@ const App = () => {
       const newFavoriteList = [...favoritesList, currentNew];
       if (!favoritesList.some((favoriteNew) => favoriteNew.id === currentNew.id)) {
          setFavoritesList(newFavoriteList);
-         toast.success("Notícia favoritada com sucesso!")
+         toast.success("Notícia favoritada com sucesso!");
       } else {
          toast.error("Notícia já favoritada.");
       }
@@ -86,19 +61,28 @@ const App = () => {
    return (
       <div className="App">
          <GlobalStyles />
-         <Header
-            setIsFavoriteModalVisible={setIsFavoriteModalVisible}
-            favoritesList={favoritesList}
-            setSearch={setSearch}
+
+         <Header>
+            <HeaderControls
+               favoritesList={favoritesList}
+               setIsFavoriteModalVisible={setIsFavoriteModalVisible}
+            />
+         </Header>
+
+         <CategoryList
+            mobileList={
+               <MobileCategoryList
+                  categoriesList={categoriesList}                  
+               />
+            }
+            desktopList={
+               <DesktopCategoryList
+                  categoriesList={categoriesList}
+               />
+            }
          />
-         <CategoryList categoriesList={categoriesList} filter={filter} setFilter={setFilter} />
-         <StyledContainer>            
-            <NewsFeed
-               newsList={newsList}
-               searchAndFilteredResults={searchAndFilteredResults}
-               search={search}
-               setSearch={setSearch}
-               filter={filter}
+         <StyledContainer>
+            <NewsFeed              
                addNewToFavoriteList={addNewToFavoriteList}
                setCurrentSelectedNew={setCurrentSelectedNew}
             />
